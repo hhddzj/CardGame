@@ -10,6 +10,17 @@ public class UIBase : MonoBehaviour
     public virtual void OnPause() { }   // 页面被新页面遮挡时调用（仅 Window 层）
     public virtual void OnResume() { }  // 遮挡页关闭后恢复时调用（仅 Window 层）
     public virtual void OnExit() { }    // 页面被关闭时调用
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
 }
 
 public class UIPanel : UIBase { }
