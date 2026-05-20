@@ -5,16 +5,18 @@ using UnityEngine;
 public class GameInitializer : MonoBehaviour
 {
     // Start is called before the first frame update
-    public MainPanel mainPanelPrefab;
+    public MainPanel mainPanelInScene;
+    public MapPanel MapPanelInScene;
+    public BagPanel BagPanelInScene;
 
     void Start()
     {
         // 实例化预制体
-        MainPanel mainPanelInstance = Instantiate(mainPanelPrefab);
-        // 注册到 UIFrame 框架中
-        UIFrame.Instance.RegisterPage(mainPanelInstance);
-
-        // 游戏一开始，直接打开主菜单
+        // 注册这个已存在的面板
+        UIFrame.Instance.RegisterPage(mainPanelInScene);
+        UIFrame.Instance.RegisterPage(MapPanelInScene);
+        UIFrame.Instance.RegisterPage(BagPanelInScene);
+        // 游戏一开始打开主菜单（也可以是别的逻辑）
         UIFrame.Instance.OpenPanel("MainPanel");
     }
 }

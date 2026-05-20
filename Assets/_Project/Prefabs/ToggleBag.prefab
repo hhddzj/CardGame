@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 2317540277803456876}
   - component: {fileID: 2489352309465263580}
+  - component: {fileID: 1857656216329832360}
   - component: {fileID: 1317480838298252043}
   - component: {fileID: 7563121607285263496}
-  - component: {fileID: -4026636873325201471}
   m_Layer: 5
-  m_Name: MainPanel
+  m_Name: ToggleBag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,6 +48,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2477682741541663570}
   m_CullTransparentMesh: 1
+--- !u!114 &1857656216329832360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2477682741541663570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70071938aad81b1409b916da919623d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pageName: BagPanel
+  isActive: 0
+  titleText: {fileID: 7951183726499029975}
 --- !u!114 &1317480838298252043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,21 +105,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &-4026636873325201471
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2477682741541663570}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47c485142250bf24fa3682119f83f43f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pageName: MainPanel
-  isActive: 0
-  titleText: {fileID: 7951183726499029975}
 --- !u!1 &7951183726499029975
 GameObject:
   m_ObjectHideFlags: 0
@@ -175,7 +175,7 @@ MonoBehaviour:
     m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 3
+    m_MinSize: 0
     m_MaxSize: 40
     m_Alignment: 0
     m_AlignByGeometry: 0
@@ -183,4 +183,4 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u4E3B\u83DC\u5355"
+  m_Text: "\u80CC\u5305"

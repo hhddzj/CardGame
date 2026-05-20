@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.PackageManager.UI;
 using UnityEngine;
 
 public class UIFrame : MonoBehaviour
@@ -11,6 +13,7 @@ public class UIFrame : MonoBehaviour
 
     private Dictionary<string, UIBase> pageDict = new Dictionary<string, UIBase>();
     private UIBase currentPanel;
+    public UIBase CurrentPanel => currentPanel;
     private Stack<UIWindow> windowStack = new Stack<UIWindow>();
     private Queue<UIWindow> windowQueue = new Queue<UIWindow>();
 
@@ -33,14 +36,23 @@ public class UIFrame : MonoBehaviour
         if (!pageDict.TryGetValue(pageName, out var page)) return;//判断是否有这个页面
         if (currentPanel != null && currentPanel != page)
         {
-            currentPanel.OnExit();
-            currentPanel.gameObject.SetActive(false);
+            ClosePanel();
         }
         currentPanel = page;
         page.gameObject.SetActive(true);
+        currentPanel.isActive = true;
         page.OnEnter();
     }
-
+    public void ClosePanel()
+    {
+        if (currentPanel != null)
+        {
+            currentPanel.OnExit();
+            currentPanel.gameObject.SetActive(false);
+            currentPanel.isActive = false;
+            currentPanel = null;
+        }
+    }
     public void OpenWindow(string pageName)
     {
         if (!pageDict.TryGetValue(pageName, out var page)) return;
@@ -52,6 +64,7 @@ public class UIFrame : MonoBehaviour
 
         windowStack.Push(window);
         window.gameObject.SetActive(true);
+        window.isActive = true;
         window.OnEnter();
     }
 
@@ -61,6 +74,7 @@ public class UIFrame : MonoBehaviour
         var window = windowStack.Pop();
         window.OnExit();
         window.gameObject.SetActive(false);
+        window.isActive = false;
 
         if (windowStack.Count > 0)
             windowStack.Peek().OnResume();
