@@ -9,9 +9,8 @@ public class MainPanel : UIPanel
     public GameObject titleText;
     public Button settingsButton;
     public Button closeButton;
-    public override void Start()
+    void Start()
     {
-        base.Start();
         if (settingsButton)
             settingsButton.onClick.AddListener(OnSettings);
     }

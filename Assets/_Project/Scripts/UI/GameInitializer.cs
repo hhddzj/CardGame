@@ -8,6 +8,7 @@ public class GameInitializer : MonoBehaviour
     public MainPanel mainPanelInScene;
     public MapPanel MapPanelInScene;
     public BagPanel BagPanelInScene;
+    public SettingsWindow settingsWindowPrefab;
 
     void Start()
     {

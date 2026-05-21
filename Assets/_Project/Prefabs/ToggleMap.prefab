@@ -105,6 +105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pageName: MapPanel
   isActive: 0
+  closeButton: {fileID: 2949196729894299528}
   titleText: {fileID: 7951183726499029975}
 --- !u!1 &7951183726499029975
 GameObject:
@@ -282,6 +283,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f6e4a5b2aca078647bc11326a1816674, type: 3}
+--- !u!114 &2949196729894299528 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7223730237701977620, guid: f6e4a5b2aca078647bc11326a1816674, type: 3}
+  m_PrefabInstance: {fileID: 5535626170020565404}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &6624163559457921683 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1675267614718102287, guid: f6e4a5b2aca078647bc11326a1816674, type: 3}

@@ -31,6 +31,8 @@ public class UIBase : MonoBehaviour
     }  // 遮挡页关闭后恢复时调用（仅 Window 层）
     public virtual void OnExit()
     {
+        if (closeButton != null)
+            closeButton.onClick.RemoveListener(OnClose);
         Debug.Log($"页面 {pageName} 被关闭了");
     }    // 页面被关闭时调用
     // Start is called before the first frame update
