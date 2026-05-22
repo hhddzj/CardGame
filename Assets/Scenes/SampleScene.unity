@@ -627,6 +627,7 @@ MonoBehaviour:
   mainPanelInScene: {fileID: 1252645627}
   MapPanelInScene: {fileID: 2050536829}
   BagPanelInScene: {fileID: 872255949}
+  settingsWindowPrefab: {fileID: 4432808427524768831}
 --- !u!114 &616664205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -913,6 +914,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4963970197449450606, guid: 22e32ae423ec7f547b21f52834fc3c0c, type: 3}
+      propertyPath: pageName
+      value: SettingsPanel
+      objectReference: {fileID: 0}
     - target: {fileID: 6263634042859301379, guid: 22e32ae423ec7f547b21f52834fc3c0c, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1003,6 +1008,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6263634042859301379, guid: 22e32ae423ec7f547b21f52834fc3c0c, type: 3}
   m_PrefabInstance: {fileID: 4432808427524768827}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4432808427524768831 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4963970197449450606, guid: 22e32ae423ec7f547b21f52834fc3c0c, type: 3}
+  m_PrefabInstance: {fileID: 4432808427524768827}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5640b9e6dcc69e4794d2e4dfca77332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7847210135039667032
 PrefabInstance:
   m_ObjectHideFlags: 0

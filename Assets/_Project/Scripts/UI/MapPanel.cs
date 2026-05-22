@@ -2,10 +2,25 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MapPanel : UIPanel
 {
     public GameObject titleText;
+    public Button tcWindow;
+    public TestWindow testWindow;
+    public void Awake()
+    {
+        tcWindow.onClick.AddListener(SpawnWindow);
+    }
+    public void SpawnWindow()
+    {
+        TestWindow win = UIFrame.Instance.OpenDynamicWindow(testWindow) as TestWindow;
+        if (win != null)
+            win.Initialize("动态窗口 " + Random.Range(1, 100));
+        
+
+    }
     public override void OnEnter()
     {
         base.OnEnter();

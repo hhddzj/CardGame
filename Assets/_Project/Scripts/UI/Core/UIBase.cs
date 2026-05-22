@@ -51,6 +51,7 @@ public class UIPanel : UIBase {
     }
 }
 public class UIWindow : UIBase {
+    public bool isDynamicWindow = false;
     public override void OnClose()
     {
         UIFrame.Instance.CloseWindow();

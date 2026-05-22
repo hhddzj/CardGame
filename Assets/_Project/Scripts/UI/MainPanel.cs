@@ -8,7 +8,6 @@ public class MainPanel : UIPanel
 {
     public GameObject titleText;
     public Button settingsButton;
-    public Button closeButton;
     void Start()
     {
         if (settingsButton)
@@ -16,7 +15,7 @@ public class MainPanel : UIPanel
     }
     void OnSettings()
     {
-        UIFrame.Instance.OpenWindow("SettingsWindow");
+        UIFrame.Instance.OpenPanel("SettingsPanel");
     }
     public override void OnEnter()
     {

@@ -118,6 +118,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""closewin"",
+                    ""type"": ""Button"",
+                    ""id"": ""c8d65705-7554-4ed6-90f9-67569fe3422c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -175,6 +184,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""ToggleMap"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4bbb08bb-c212-4d4f-8c67-88e11c8b7987"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""closewin"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""851a35e8-288a-40bb-a5df-20e5a00e6faa"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""closewin"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -186,6 +217,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Cancel = m_Player.FindAction("Cancel", throwIfNotFound: true);
         m_Player_ToggleBag = m_Player.FindAction("ToggleBag", throwIfNotFound: true);
         m_Player_ToggleMap = m_Player.FindAction("ToggleMap", throwIfNotFound: true);
+        m_Player_closewin = m_Player.FindAction("closewin", throwIfNotFound: true);
     }
 
     ~@PlayerInputActions()
@@ -269,6 +301,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Cancel;
     private readonly InputAction m_Player_ToggleBag;
     private readonly InputAction m_Player_ToggleMap;
+    private readonly InputAction m_Player_closewin;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -292,6 +325,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/ToggleMap".
         /// </summary>
         public InputAction @ToggleMap => m_Wrapper.m_Player_ToggleMap;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/closewin".
+        /// </summary>
+        public InputAction @closewin => m_Wrapper.m_Player_closewin;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -327,6 +364,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @ToggleMap.started += instance.OnToggleMap;
             @ToggleMap.performed += instance.OnToggleMap;
             @ToggleMap.canceled += instance.OnToggleMap;
+            @closewin.started += instance.OnClosewin;
+            @closewin.performed += instance.OnClosewin;
+            @closewin.canceled += instance.OnClosewin;
         }
 
         /// <summary>
@@ -347,6 +387,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @ToggleMap.started -= instance.OnToggleMap;
             @ToggleMap.performed -= instance.OnToggleMap;
             @ToggleMap.canceled -= instance.OnToggleMap;
+            @closewin.started -= instance.OnClosewin;
+            @closewin.performed -= instance.OnClosewin;
+            @closewin.canceled -= instance.OnClosewin;
         }
 
         /// <summary>
@@ -408,5 +451,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnToggleMap(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "closewin" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnClosewin(InputAction.CallbackContext context);
     }
 }

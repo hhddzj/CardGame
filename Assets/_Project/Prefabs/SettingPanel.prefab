@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6263634042859301379}
   - component: {fileID: 2851058278855469293}
   - component: {fileID: 1796658189614042678}
+  - component: {fileID: 4963970197449450606}
   m_Layer: 0
   m_Name: SettingPanel
   m_TagString: Untagged
@@ -77,6 +78,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4963970197449450606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1070960651348263288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5640b9e6dcc69e4794d2e4dfca77332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pageName: SettingsPanel
+  isActive: 0
+  closeButton: {fileID: 645221193980324105}
+  isDynamicWindow: 0
+  titleText: {fileID: 1656890670660632059}
 --- !u!1 &1656890670660632059
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,6 +326,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f6e4a5b2aca078647bc11326a1816674, type: 3}
+--- !u!114 &645221193980324105 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7223730237701977620, guid: f6e4a5b2aca078647bc11326a1816674, type: 3}
+  m_PrefabInstance: {fileID: 7839519148223323933}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &8931814693962798098 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1675267614718102287, guid: f6e4a5b2aca078647bc11326a1816674, type: 3}

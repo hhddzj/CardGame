@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,22 +8,14 @@ public class TestWindow : UIWindow
 {
     // Start is called before the first frame update
     public Text titleText;
-    public Button closeButton;
-    private string myPageName;
+    public TextMeshProUGUI DynamicWindowText;
 
     // 由外部设置唯一名称
-    public void Initialize(string uniqueName)
+    public void Initialize(string dynamicWindowText)
     {
-        myPageName = uniqueName;
-        pageName = uniqueName;
-        if (titleText) titleText.text = uniqueName;
-        if (closeButton) closeButton.onClick.AddListener(OnClose);
+        if (dynamicWindowText != null) DynamicWindowText.text = dynamicWindowText;
     }
 
-    void OnClose()
-    {
-        UIFrame.Instance.CloseWindow();   // 从栈中弹出自身
-    }
 
     public override void OnExit()
     {

@@ -67,6 +67,33 @@ public class UIFrame : MonoBehaviour
         window.isActive = true;
         window.OnEnter();
     }
+    public UIWindow OpenDynamicWindow(UIWindow prefab)
+    {
+        if (prefab == null) return null;
+
+        // 生成唯一名称（使用时间戳+随机数避免冲突）
+        string uniqueName = $"DynamicWin_{System.DateTime.Now.Ticks}_{Random.Range(0, 10000)}";
+
+        // 实例化并设置父物体
+        UIWindow instance = Instantiate(prefab, windowLayer);
+        instance.pageName = uniqueName;
+        instance.name = uniqueName;
+        instance.isDynamicWindow = true;
+
+        // 注册到字典（唯一名，不会冲突）
+        RegisterPage(instance);
+
+        // 压入栈并激活
+        if (windowStack.Count > 0)
+            windowStack.Peek().OnPause();
+
+        windowStack.Push(instance);
+        instance.gameObject.SetActive(true);
+        instance.isActive = true;
+        instance.OnEnter();
+        return instance;
+
+    }
 
     public void CloseWindow()
     {
@@ -75,6 +102,11 @@ public class UIFrame : MonoBehaviour
         window.OnExit();
         window.gameObject.SetActive(false);
         window.isActive = false;
+        if (window.isDynamicWindow)
+        {
+            pageDict.Remove(window.pageName);
+            Destroy(window);
+        }
 
         if (windowStack.Count > 0)
             windowStack.Peek().OnResume();
