@@ -14,13 +14,13 @@
 - **DOTween 动画**：入场弹性缩放效果。
 
 ## 🧱 架构概览
-Canvas
-- PanelLayer ← 所有 Panel（主菜单、背包、地图）
--- MainPanel
--- BagPanel
---MapPanel
--WindowLayer ← 所有 Window（静态弹窗）
--─ (动态生成的窗口)
+-Canvas
+-├── PanelLayer ← 所有 Panel（主菜单、背包、地图）
+-│ ├── MainPanel
+-│ ├── BagPanel
+-│ └── MapPanel
+-└── WindowLayer ← 所有 Window（设置、动态弹窗）
+-└── (动态生成的窗口)
 
 - **UIFrame**：全局单例，统一管理注册、打开、关闭。
 - **UIBase → UIPanel / UIWindow**：页面基类与标记类。
