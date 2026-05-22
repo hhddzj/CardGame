@@ -429,6 +429,8 @@ MonoBehaviour:
     pageName: BagPanel
   - actionName: ToggleMap
     pageName: MapPanel
+  - actionName: closewin
+    pageName: 
 --- !u!114 &340658009
 MonoBehaviour:
   m_ObjectHideFlags: 0
