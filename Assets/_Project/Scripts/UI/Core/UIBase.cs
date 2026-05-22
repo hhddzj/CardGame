@@ -9,6 +9,13 @@ public class UIBase : MonoBehaviour
     public string pageName;// 页面唯一标识
     public bool isActive = false;//当前是否处于激活显示状态
     public Button closeButton;
+    public virtual void Awake()
+    {
+        if (closeButton)
+            closeButton.onClick.AddListener(OnClose);
+        if (GetComponent<DraggableWindow>() == null)
+            gameObject.AddComponent<DraggableWindow>();
+    }
     void Start()
     {
     }
@@ -17,8 +24,6 @@ public class UIBase : MonoBehaviour
     }
     public virtual void OnEnter()
     {
-        if (closeButton)
-            closeButton.onClick.AddListener(OnClose);
         Debug.Log($"页面 {pageName} 被打开了");
     }   // 页面被打开时调用
     public virtual void OnPause()
@@ -31,8 +36,6 @@ public class UIBase : MonoBehaviour
     }  // 遮挡页关闭后恢复时调用（仅 Window 层）
     public virtual void OnExit()
     {
-        if (closeButton != null)
-            closeButton.onClick.RemoveListener(OnClose);
         Debug.Log($"页面 {pageName} 被关闭了");
     }    // 页面被关闭时调用
     // Start is called before the first frame update
@@ -54,6 +57,7 @@ public class UIWindow : UIBase {
     public bool isDynamicWindow = false;
     public override void OnClose()
     {
-        UIFrame.Instance.CloseWindow();
+        UIFrame.Instance.CloseSpecificWindow(this);
+
     }
 }

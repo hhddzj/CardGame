@@ -94,21 +94,72 @@ public class UIFrame : MonoBehaviour
         return instance;
 
     }
+    public void BringWindowToFront(UIWindow window)
+    {
+        if (window == null || windowStack.Count == 0 || windowStack.Peek() == window)
+            return; // 已经是栈顶，无需操作
+
+        // 从栈中移除该窗口
+        var tempList = new List<UIWindow>(windowStack);
+        if (!tempList.Contains(window)) return;
+        tempList.Remove(window);
+
+        // 暂停当前栈顶（将被压到下面）
+        if (windowStack.Count > 0)
+            windowStack.Peek().OnPause();
+
+        // 重建栈：先压入原来的窗口（顺序不变），再把目标窗口压入栈顶
+        windowStack.Clear();
+        for (int i = tempList.Count - 1; i >= 0; i--) // 反向遍历：先A，再B，最后C
+        {
+            windowStack.Push(tempList[i]);
+        }
+        windowStack.Push(window);
+
+        // 视觉层级置顶
+        window.transform.SetAsLastSibling();
+
+        // 如果该窗口之前处于暂停状态，现在恢复它
+        window.OnResume();
+    }
 
     public void CloseWindow()
     {
         if (windowStack.Count == 0) return;
-        var window = windowStack.Pop();
-        window.OnExit();
-        window.gameObject.SetActive(false);
-        window.isActive = false;
-        if (window.isDynamicWindow)
+        CloseSpecificWindow(windowStack.Peek());
+    }
+    public void CloseSpecificWindow(UIWindow sWindow)
+    {
+        if (windowStack.Count == 0) return;
+        if (!windowStack.Contains(sWindow)) return;
+        sWindow.OnExit();
+        sWindow.gameObject.SetActive(false);
+        sWindow.isActive = false;
+        if (windowStack.Peek() != sWindow)
         {
-            pageDict.Remove(window.pageName);
-            Destroy(window);
+
+            var tempList = new List<UIWindow>(windowStack);
+            if (!tempList.Contains(sWindow)) return;
+            tempList.Remove(sWindow);
+            windowStack.Clear();
+            for (int i = tempList.Count - 1; i >= 0; i--) // 反向遍历：先A，再B，最后C
+            {
+                windowStack.Push(tempList[i]);
+            }
+
+        }
+        else
+        {
+            windowStack.Pop();
+            if (windowStack.Count > 0)
+            windowStack.Peek().OnResume();
+        }
+        if (sWindow.isDynamicWindow)
+        {
+            pageDict.Remove(sWindow.pageName);
+            Destroy(sWindow.gameObject);
         }
 
-        if (windowStack.Count > 0)
-            windowStack.Peek().OnResume();
+
     }
 }
