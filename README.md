@@ -15,12 +15,12 @@
 
 ## 🧱 架构概览
 Canvas
-├── PanelLayer ← 所有 Panel（主菜单、背包、地图）
-│ ├── MainPanel
-│ ├── BagPanel
-│ └── MapPanel
-└── WindowLayer ← 所有 Window（设置、动态弹窗）
-└── (动态生成的窗口)
+- PanelLayer ← 所有 Panel（主菜单、背包、地图）
+-- MainPanel
+-- BagPanel
+--MapPanel
+-WindowLayer ← 所有 Window（静态弹窗）
+-─ (动态生成的窗口)
 
 - **UIFrame**：全局单例，统一管理注册、打开、关闭。
 - **UIBase → UIPanel / UIWindow**：页面基类与标记类。
@@ -57,23 +57,25 @@ Unity Input System（Package Manager 安装）
 Unity UI（内置）
 
 项目结构
-Assets/
-└── _Project/
-    ├── Scripts/
-    │   └── UI/
-    │       ├── Core/
-    │       │   ├── UIFrame.cs          ← 框架核心
-    │       │   ├── UIBase.cs           ← 页面基类
-    │       │   └── DraggableWindow.cs  ← 拖拽组件
-    │       ├── Panels/                 ← Panel 脚本
-    │       │   ├── MainPanel.cs
-    │       │   ├── BagPanel.cs
-    │       │   └── MapPanel.cs
-    │       └── Windows/                ← Window 脚本
-    │           └── TestWindow.cs
-    ├── Prefabs/UI/                     ← UI 预制体
-    ├── InputActions/                   ← InputSystem 资产
-    └── Scenes/                         ← 场景文件
-后续计划
+-Assets/
+-└── _Project/
+-    ├── Scripts/
+-    │   └── UI/
+-    │       ├── Core/
+-    │       │   ├── UIFrame.cs          ← 框架核心
+-    │       │   ├── UIBase.cs           ← 页面基类
+-    │       │   └── DraggableWindow.cs  ← 拖拽组件
+-    │       ├── Panels/                 ← Panel 脚本
+-    │       │   ├── MainPanel.cs
+-    │       │   ├── BagPanel.cs
+-    │       │   └── MapPanel.cs
+-    │       └── Windows/                ← Window 脚本
+-    │           └── TestWindow.cs
+-    ├── Prefabs/UI/                     ← UI 预制体
+-    ├── InputActions/                   ← InputSystem 资产
+-    └── Scenes/                         ← 场景文件
+-后续计划
+加入UI显示队列，让玩家可以通过点击队列中的图标来选择弹窗
+加入弹窗的最小化功能
 加入UI显示队列，让玩家可以通过点击队列中的图标来选择弹窗
 加入弹窗的最小化功能
