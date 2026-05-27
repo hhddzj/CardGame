@@ -102,27 +102,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""ToggleBag"",
-                    ""type"": ""Button"",
-                    ""id"": ""1ba157fd-123b-4c8b-8997-9ef7cef4db85"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""ToggleMap"",
                     ""type"": ""Button"",
                     ""id"": ""8c45d319-1ff1-4852-9c91-19a872f2d14f"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""closewin"",
-                    ""type"": ""Button"",
-                    ""id"": ""c8d65705-7554-4ed6-90f9-67569fe3422c"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -143,28 +125,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""3f3e8615-47dc-47bf-84ba-bb42f5e35cb6"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ToggleBag"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""c4a2fd4d-3527-439f-bcdf-f62049597b8a"",
-                    ""path"": ""<Keyboard>/tab"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ToggleBag"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""0a540395-0086-48fd-bcc6-1fe0f44f7253"",
                     ""path"": """",
                     ""interactions"": """",
@@ -177,33 +137,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""6d912a6a-44ca-40d4-a630-9b0568f8801d"",
-                    ""path"": ""<Keyboard>/m"",
+                    ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ToggleMap"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""4bbb08bb-c212-4d4f-8c67-88e11c8b7987"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""closewin"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""851a35e8-288a-40bb-a5df-20e5a00e6faa"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""closewin"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -215,9 +153,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Cancel = m_Player.FindAction("Cancel", throwIfNotFound: true);
-        m_Player_ToggleBag = m_Player.FindAction("ToggleBag", throwIfNotFound: true);
         m_Player_ToggleMap = m_Player.FindAction("ToggleMap", throwIfNotFound: true);
-        m_Player_closewin = m_Player.FindAction("closewin", throwIfNotFound: true);
     }
 
     ~@PlayerInputActions()
@@ -299,9 +235,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Cancel;
-    private readonly InputAction m_Player_ToggleBag;
     private readonly InputAction m_Player_ToggleMap;
-    private readonly InputAction m_Player_closewin;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -318,17 +252,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Cancel => m_Wrapper.m_Player_Cancel;
         /// <summary>
-        /// Provides access to the underlying input action "Player/ToggleBag".
-        /// </summary>
-        public InputAction @ToggleBag => m_Wrapper.m_Player_ToggleBag;
-        /// <summary>
         /// Provides access to the underlying input action "Player/ToggleMap".
         /// </summary>
         public InputAction @ToggleMap => m_Wrapper.m_Player_ToggleMap;
-        /// <summary>
-        /// Provides access to the underlying input action "Player/closewin".
-        /// </summary>
-        public InputAction @closewin => m_Wrapper.m_Player_closewin;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -358,15 +284,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Cancel.started += instance.OnCancel;
             @Cancel.performed += instance.OnCancel;
             @Cancel.canceled += instance.OnCancel;
-            @ToggleBag.started += instance.OnToggleBag;
-            @ToggleBag.performed += instance.OnToggleBag;
-            @ToggleBag.canceled += instance.OnToggleBag;
             @ToggleMap.started += instance.OnToggleMap;
             @ToggleMap.performed += instance.OnToggleMap;
             @ToggleMap.canceled += instance.OnToggleMap;
-            @closewin.started += instance.OnClosewin;
-            @closewin.performed += instance.OnClosewin;
-            @closewin.canceled += instance.OnClosewin;
         }
 
         /// <summary>
@@ -381,15 +301,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Cancel.started -= instance.OnCancel;
             @Cancel.performed -= instance.OnCancel;
             @Cancel.canceled -= instance.OnCancel;
-            @ToggleBag.started -= instance.OnToggleBag;
-            @ToggleBag.performed -= instance.OnToggleBag;
-            @ToggleBag.canceled -= instance.OnToggleBag;
             @ToggleMap.started -= instance.OnToggleMap;
             @ToggleMap.performed -= instance.OnToggleMap;
             @ToggleMap.canceled -= instance.OnToggleMap;
-            @closewin.started -= instance.OnClosewin;
-            @closewin.performed -= instance.OnClosewin;
-            @closewin.canceled -= instance.OnClosewin;
         }
 
         /// <summary>
@@ -438,25 +352,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnCancel(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "ToggleBag" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnToggleBag(InputAction.CallbackContext context);
-        /// <summary>
         /// Method invoked when associated input action "ToggleMap" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnToggleMap(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "closewin" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnClosewin(InputAction.CallbackContext context);
     }
 }

@@ -9,9 +9,19 @@ public class MapPanel : UIPanel
     public GameObject titleText;
     public Button tcWindow;
     public TestWindow testWindow;
-    public void Awake()
+    public Button SettingWindow;
+
+    public override void Awake()
     {
-        tcWindow.onClick.AddListener(SpawnWindow);
+        base.Awake();
+        if (tcWindow)
+            tcWindow.onClick.AddListener(SpawnWindow);
+        if (SettingWindow)
+            SettingWindow.onClick.AddListener(OpenSettingWindow);
+    }
+    public void OpenSettingWindow()
+    {
+        UIFrame.Instance.OpenWindow("SettingsWindow");
     }
     public void SpawnWindow()
     {

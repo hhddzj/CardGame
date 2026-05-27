@@ -2,11 +2,24 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class SettingsPanel : UIPanel
+public class SettingsWindow : UIWindow
 {
     // Start is called before the first frame update
     public GameObject titleText;
+    public Button MainButton;
+    public override void Awake()
+    {
+        base.Awake();
+        if (MainButton)
+            MainButton.onClick.AddListener(OpenMainPanel);
+    }
+    public void OpenMainPanel()
+    {
+        UIFrame.Instance.OpenPanel("MainPanel");
+        UIFrame.Instance.CloseAllWindow();
+    }
     public override void OnEnter()
     {
         base.OnEnter();

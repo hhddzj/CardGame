@@ -8,7 +8,7 @@ public class GameInitializer : MonoBehaviour
     public MainPanel mainPanelInScene;
     public MapPanel MapPanelInScene;
     public BagPanel BagPanelInScene;
-    public SettingsPanel settingsWindowPrefab;
+    public SettingsWindow settingsWindowInScene;
     public BattlePanel BattlePanelInScene;
 
     void Start()
@@ -19,7 +19,7 @@ public class GameInitializer : MonoBehaviour
         UIFrame.Instance.RegisterPage(MapPanelInScene);
         UIFrame.Instance.RegisterPage(BagPanelInScene);
         UIFrame.Instance.RegisterPage(BattlePanelInScene);
-        UIFrame.Instance.RegisterPage(settingsWindowPrefab);
+        UIFrame.Instance.RegisterPage(settingsWindowInScene);
         // 游戏一开始打开主菜单（也可以是别的逻辑）
         UIFrame.Instance.OpenPanel("MainPanel");
     }

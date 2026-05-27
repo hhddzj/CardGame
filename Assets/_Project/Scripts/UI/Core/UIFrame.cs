@@ -14,8 +14,10 @@ public class UIFrame : MonoBehaviour
     private Dictionary<string, UIBase> pageDict = new Dictionary<string, UIBase>();
     private UIBase currentPanel;
     public UIBase CurrentPanel => currentPanel;
-    private Stack<UIWindow> windowStack = new Stack<UIWindow>();
     private Queue<UIWindow> windowQueue = new Queue<UIWindow>();
+    private Dictionary<UIWindow,WindowNode> windowNodeMap = new Dictionary<UIWindow, WindowNode>();
+    private WindowNode head;          // 栈顶
+    private int windowCount = 0;      // 用于快速判断是否为空
 
     private void Awake()
     {
@@ -58,22 +60,42 @@ public class UIFrame : MonoBehaviour
         if (!pageDict.TryGetValue(pageName, out var page)) return;
         var window = page as UIWindow;
         if (window == null) return;
-
-        if (windowStack.Count > 0)
-            windowStack.Peek().OnPause();
-
-        windowStack.Push(window);
+        if(windowNodeMap.ContainsKey(window))
+        {
+            BringWindowToFront(window);
+            return;
+        }
+            
+        WindowNode windowNode = new WindowNode(window);
+        windowNodeMap[window] = windowNode;
+        if (head != null)
+        {
+            head.window.OnPause();
+            windowNode.next = head;
+            head.prev = windowNode;
+            head = windowNode;
+        }
+        else
+        {
+            head = windowNode;
+        }
+        windowCount++;
         window.gameObject.SetActive(true);
         window.isActive = true;
         window.OnEnter();
+        if (pageName == "SettingsWindow")
+        {
+            window.transform.SetAsLastSibling();
+        }
     }
+    private static int dynamicWindowCounter = 0;
     public UIWindow OpenDynamicWindow(UIWindow prefab)
     {
         if (prefab == null) return null;
 
         // 生成唯一名称（使用时间戳+随机数避免冲突）
-        string uniqueName = $"DynamicWin_{System.DateTime.Now.Ticks}_{Random.Range(0, 10000)}";
-
+        dynamicWindowCounter++;
+        string uniqueName = $"DynamicWin_{dynamicWindowCounter}";
         // 实例化并设置父物体
         UIWindow instance = Instantiate(prefab, windowLayer);
         instance.pageName = uniqueName;
@@ -84,10 +106,20 @@ public class UIFrame : MonoBehaviour
         RegisterPage(instance);
 
         // 压入栈并激活
-        if (windowStack.Count > 0)
-            windowStack.Peek().OnPause();
-
-        windowStack.Push(instance);
+        WindowNode windowNode = new WindowNode(instance);
+        windowNodeMap[instance] = windowNode;
+        if (head != null)
+        {
+            head.window.OnPause();
+            head.prev = windowNode;
+            windowNode.next = head;
+            head = windowNode;
+        }
+        else
+        {
+            head = windowNode;
+        }
+        windowCount++;
         instance.gameObject.SetActive(true);
         instance.isActive = true;
         instance.OnEnter();
@@ -96,64 +128,66 @@ public class UIFrame : MonoBehaviour
     }
     public void BringWindowToFront(UIWindow window)
     {
-        if (window == null || windowStack.Count == 0 || windowStack.Peek() == window)
+        if (window == null || windowCount == 0 || head.window == window)
             return; // 已经是栈顶，无需操作
-
-        // 从栈中移除该窗口
-        var tempList = new List<UIWindow>(windowStack);
-        if (!tempList.Contains(window)) return;
-        tempList.Remove(window);
-
-        // 暂停当前栈顶（将被压到下面）
-        if (windowStack.Count > 0)
-            windowStack.Peek().OnPause();
-
-        // 重建栈：先压入原来的窗口（顺序不变），再把目标窗口压入栈顶
-        windowStack.Clear();
-        for (int i = tempList.Count - 1; i >= 0; i--) // 反向遍历：先A，再B，最后C
-        {
-            windowStack.Push(tempList[i]);
-        }
-        windowStack.Push(window);
-
+        windowNodeMap.TryGetValue(window, out var windowNode);
+        if(windowNode.next != null)
+        windowNode.next.prev = windowNode.prev;
+        if(windowNode.prev != null)
+        windowNode.prev.next = windowNode.next;
+        head.prev = windowNode;
+        windowNode.next = head;
+        windowNode.prev = null;
+        head.window.OnPause();
+        head = windowNode;
         // 视觉层级置顶
         window.transform.SetAsLastSibling();
 
         // 如果该窗口之前处于暂停状态，现在恢复它
         window.OnResume();
     }
-
+    public void CloseAllWindow()
+    {
+        while (head != null)
+        {
+            CloseSpecificWindow(head.window);
+        }
+    }
     public void CloseWindow()
     {
-        if (windowStack.Count == 0) return;
-        CloseSpecificWindow(windowStack.Peek());
+        if (windowCount == 0) return;
+        CloseSpecificWindow(head.window);
     }
     public void CloseSpecificWindow(UIWindow sWindow)
     {
-        if (windowStack.Count == 0) return;
-        if (!windowStack.Contains(sWindow)) return;
+        if (windowCount == 0) return;
+        if (!windowNodeMap.TryGetValue(sWindow,out var node)) return;
         sWindow.OnExit();
         sWindow.gameObject.SetActive(false);
         sWindow.isActive = false;
-        if (windowStack.Peek() != sWindow)
+        bool wasHead = (node == head);
+        if (wasHead)
         {
-
-            var tempList = new List<UIWindow>(windowStack);
-            if (!tempList.Contains(sWindow)) return;
-            tempList.Remove(sWindow);
-            windowStack.Clear();
-            for (int i = tempList.Count - 1; i >= 0; i--) // 反向遍历：先A，再B，最后C
+            head = head.next;
+            if (head != null)
             {
-                windowStack.Push(tempList[i]);
+                head.prev = null;
+                head.window.OnResume(); // 新栈顶恢复
+                head.window.gameObject.SetActive(true);
+                head.window.isActive = true;
             }
-
+            
         }
         else
         {
-            windowStack.Pop();
-            if (windowStack.Count > 0)
-            windowStack.Peek().OnResume();
+
+            if (node.next != null)
+                node.next.prev = node.prev;
+            if (node.prev != null)
+                node.prev.next = node.next;
         }
+        windowNodeMap.Remove(sWindow);
+        windowCount--;
         if (sWindow.isDynamicWindow)
         {
             pageDict.Remove(sWindow.pageName);
@@ -161,5 +195,38 @@ public class UIFrame : MonoBehaviour
         }
 
 
+    }
+    public int WindowCount => windowCount;
+
+    // 获取当前栈顶窗口（仍保留 CurrentPanel 是 Panel 专属，这里提供 CurrentWindow）
+    public UIWindow CurrentWindow => head?.window;
+
+    // 检查某个窗口是否在显示中
+    public bool IsWindowActive(UIWindow window)
+    {
+        return windowNodeMap.ContainsKey(window);
+    }
+
+    // 获取所有窗口列表（从栈顶到栈底）
+    public List<UIWindow> GetAllWindows()
+    {
+        var list = new List<UIWindow>();
+        var cur = head;
+        while (cur != null)
+        {
+            list.Add(cur.window);
+            cur = cur.next;
+        }
+        return list;
+    }
+    private class WindowNode
+    {
+        public UIWindow window;
+        public WindowNode prev;
+        public WindowNode next;
+        public WindowNode(UIWindow window)
+        {
+            this.window = window;
+        }
     }
 }

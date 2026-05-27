@@ -65,17 +65,13 @@ public class UIInputHandler : MonoBehaviour
 
     private void ExecuteBinding(UIActionBinding binding)
     {
-        if (binding.actionName == "closewin")
-        {
-            UIFrame.Instance.CloseWindow();
-        }
         // 特殊处理：如果是 Cancel（ESC），保持原来的切换逻辑
         if (binding.actionName == "Cancel")
         {
-            if (UIFrame.Instance.CurrentPanel != null)
-                UIFrame.Instance.ClosePanel();
+            if (UIFrame.Instance.CurrentWindow!=null&& UIFrame.Instance.CurrentWindow.pageName == binding.pageName)
+                UIFrame.Instance.CloseWindow();
             else
-                UIFrame.Instance.OpenPanel(binding.pageName);
+                UIFrame.Instance.OpenWindow(binding.pageName);
         }
         else
         {

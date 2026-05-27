@@ -8,14 +8,26 @@ public class MainPanel : UIPanel
 {
     public GameObject titleText;
     public Button settingsButton;
+    public Button playgameButton;
     void Start()
     {
         if (settingsButton)
             settingsButton.onClick.AddListener(OnSettings);
+        if (playgameButton)
+            playgameButton.onClick.AddListener(OnMapPanel);
+    }
+    void OnMapPanel()
+    {
+        UIFrame.Instance.OpenPanel("MapPanel");
     }
     void OnSettings()
     {
-        UIFrame.Instance.OpenPanel("SettingsPanel");
+        UIFrame.Instance.OpenWindow("SettingsWindow");
+    }
+    public override void OnClose()
+    {
+        Debug.Log($"游戏退出");
+
     }
     public override void OnEnter()
     {
