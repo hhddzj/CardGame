@@ -1,8 +1,11 @@
+using Assets._Project.Scripts.Managers;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class BattleManager : MonoBehaviour
 {
@@ -13,17 +16,62 @@ public class BattleManager : MonoBehaviour
     public List<Card> deckList = new List<Card>();
     public List<Card> handList = new List<Card>();
     public List<Card> discardList = new List<Card>();
-
+    public BattleState battleState = BattleState.PlayerAction;
     public Player player;
     public Enemy monster;
     private System.Random rand = new System.Random();
-
-    void Start()
+    public Button button;
+    public static BattleManager Instance {  get; private set; }
+    private void Awake()
     {
-        InitBattle();
+        //InitBattle();
+        if (Instance) Destroy(gameObject);
+        else Instance = this;
+        DontDestroyOnLoad(gameObject);
+        button.onClick.AddListener(NextTurn);
     }
+    public void NextTurn()
+    {
 
+        PlayerTurnEnd();
+        EnemyTurnStart();
+        PlayerTurnStart();
+        PlayerAction();
+    }
+    public void PlayerTurnEnd()
+    {
+        // 结算回合结束效果
+        battleState = BattleState.PlayerTurnEnd;
+        Debug.Log("结算回合结束效果");
+    }
+    public void EnemyTurnStart()
+    {
+        // 敌人执行意图
+        battleState = BattleState.EnemyTurnStart;
+        Debug.Log("敌人执行意图");
+
+    }
+    public void PlayerTurnStart()
+    {
+        // 回能量、抽牌、重置格挡,结算敌方回合结束效果
+        Debug.Log("回能量、抽牌、重置格挡,结算敌方回合结束效果");
+        battleState = BattleState.PlayerTurnStart;
+
+    }
+    public void PlayerAction()
+    {
+        // 等待玩家出牌
+        battleState = BattleState.PlayerAction;
+        Debug.Log("玩家出牌");
+
+    }
     //初始化战斗
+    /*PlayerTurnStart,   // 回能量、抽牌、重置格挡
+        PlayerAction,      // 等待玩家出牌
+        PlayerTurnEnd,     // 结算回合结束效果
+        EnemyTurnStart,    // 敌人执行意图
+        EnemyAction,       // 播放动作
+        EnemyTurnEnd,      // 结算敌方回合结束效果*/
     public void InitBattle()
     {
         //初始化角色

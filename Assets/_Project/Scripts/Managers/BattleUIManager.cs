@@ -15,7 +15,7 @@ public class BattleUIManager : MonoBehaviour
 
     void Awake()
     {
-        btnEndTurn.onClick.AddListener(() => FindObjectOfType<BattleManager>().EndPlayerTurn());
+        //btnEndTurn.onClick.AddListener(() => FindObjectOfType<BattleManager>().EndPlayerTurn());
     }
 
     //全量刷新UI

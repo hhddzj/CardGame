@@ -608,6 +608,39 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2285932346754164620, guid: c0f786fddb237da4abd6e0346180bd75, type: 3}
   m_PrefabInstance: {fileID: 430310545}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &430310547 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9033236133040536702, guid: c0f786fddb237da4abd6e0346180bd75, type: 3}
+  m_PrefabInstance: {fileID: 430310545}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &430310548 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7225493374749991898, guid: c0f786fddb237da4abd6e0346180bd75, type: 3}
+  m_PrefabInstance: {fileID: 430310545}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfb211b3f68da774fa42fede61261961, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &430310549 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6677533883590025778, guid: c0f786fddb237da4abd6e0346180bd75, type: 3}
+  m_PrefabInstance: {fileID: 430310545}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79fb6c3fe41569e4eaefca1a8c3044ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &541952196
 GameObject:
   m_ObjectHideFlags: 0
@@ -827,8 +860,10 @@ MonoBehaviour:
   deckList: []
   handList: []
   discardList: []
-  player: {fileID: 0}
-  monster: {fileID: 0}
+  battleState: 1
+  player: {fileID: 430310549}
+  monster: {fileID: 430310548}
+  button: {fileID: 430310547}
 --- !u!4 &771644355
 Transform:
   m_ObjectHideFlags: 0
@@ -942,7 +977,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2477682741541663570, guid: a08477ecd51b63a4d8a4ba4858fa9881, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: -4026636873325201471, guid: a08477ecd51b63a4d8a4ba4858fa9881, type: 3}
