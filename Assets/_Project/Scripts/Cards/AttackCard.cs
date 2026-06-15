@@ -7,11 +7,10 @@ public class AttackCard : Card
     public string cardName="攻击";
     public int cost=1;
     public CardType type=CardType.Attack; // Attack, Skill, Power
-    public string description="一攻击的卡牌";
+    public string description="6伤害的卡牌";
     public override void Play(Character source, Character target)
     {
-        source = BattleManager.Instance.player;
-        target = BattleManager.Instance.monster;
-        source.TakeDamage(10);
+        int damage = 6; // 基础伤害，可以加上 source 的力量加成
+        target.TakeDamage(damage);
     }
 }

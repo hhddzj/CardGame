@@ -598,6 +598,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4184943737159777088, guid: c0f786fddb237da4abd6e0346180bd75, type: 3}
+      propertyPath: m_Type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4184943737159777088, guid: c0f786fddb237da4abd6e0346180bd75, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 4184943737159777088, guid: c0f786fddb237da4abd6e0346180bd75, type: 3}
+      propertyPath: m_FillMethod
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6677533883590025778, guid: c0f786fddb237da4abd6e0346180bd75, type: 3}
+      propertyPath: Hp
+      value: 
+      objectReference: {fileID: 430310550}
+    - target: {fileID: 6677533883590025778, guid: c0f786fddb237da4abd6e0346180bd75, type: 3}
+      propertyPath: HpImage
+      value: 
+      objectReference: {fileID: 430310551}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -639,6 +659,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 79fb6c3fe41569e4eaefca1a8c3044ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &430310550 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7006920975071056134, guid: c0f786fddb237da4abd6e0346180bd75, type: 3}
+  m_PrefabInstance: {fileID: 430310545}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &430310551 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4184943737159777088, guid: c0f786fddb237da4abd6e0346180bd75, type: 3}
+  m_PrefabInstance: {fileID: 430310545}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &541952196

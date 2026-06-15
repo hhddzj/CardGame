@@ -1,11 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class Enemy : Character
 {
     //public Intent currentIntent;
-
+    public Enemy(int maxHp, int maxEne)
+    {
+        maxHealth = maxHp;
+        currentHealth = maxHp;
+    }
     public void DecideIntent()
     {
         // 简单规则：血量低时可能防御，否则攻击

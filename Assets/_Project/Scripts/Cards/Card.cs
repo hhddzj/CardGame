@@ -14,6 +14,7 @@ public class Card : ScriptableObject
     public virtual void Play(Character source, Character target)
     {
         // 子类重写
+
     }
 
 }

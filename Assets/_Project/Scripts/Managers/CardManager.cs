@@ -15,8 +15,9 @@ namespace Assets._Project.Scripts.Managers
         public List<Card> hand;
         public int handSize = 5;
 
-        public void DrawCards(int count)
+        public void DiscardCard(Card card)
         {
+            hand.Remove(card);
             for (int i = 0; i < count; i++)
             {
                 if (deck.Count == 0)
