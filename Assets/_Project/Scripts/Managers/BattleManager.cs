@@ -9,35 +9,35 @@ using UnityEngine.UI;
 
 public class BattleManager : MonoBehaviour
 {
-    [Header("UI管理器拖拽赋值")]
-    public BattleUIManager uiManager;
     [Header("角色引用")]
     public Player player;
     public List<Enemy> enemies;          // 当前战斗中的敌人
 
-    [Header("卡牌系统")]
-    public CardManager cardManager;      // 管理牌库、手牌、弃牌堆
+    [Header("卡牌系统")]     // 管理牌库、手牌、弃牌堆
     public BattleState currentState;
     [Header("怪物")]
     public GameObject enemyPrefab;            // 敌人预制体
     public Transform enemySpawnPoint;         // 场景中敌人出生点
-    void Start()
-    {
-        InitBattle();                    // 创建怪物 + 初始化卡组
-        ChangeState(BattleState.PlayerTurnStart);
-    }
-    void ChangeState(BattleState newState) { }
-    void InitBattle()
+    public void ChangeState(BattleState newState) { }
+    public void InitBattle()
     {
         // 1. 根据关卡配置创建敌人（下面细讲）
-        // 2. 给 player 初始化血量、能量
-        // 3. cardManager.InitDeck(player.deckData); // 从卡组配置抽牌
         GameObject enemyObj = Instantiate(enemyPrefab, enemySpawnPoint);
         Enemy enemy = enemyObj.GetComponent<Enemy>();
         enemies.Add(enemy);
         // 配置敌人属性
         enemy.maxHealth = 50;
         enemy.currentHealth = 50;
+        // 2. 给 player 初始化血量、能量
+
+        if (player != null)
+        {
+            // 30血量、3点最大能量
+            player.InitPlayer(30, 3);
+            player.ResetEnergy();
+        }
+        // 3. cardManager.InitDeck(player.deckData); // 从卡组配置抽牌
+        CardManager.Instance.DisCard(5);
     }
     // 这里就是你要的“使用卡牌”的业务逻辑
     public void PlayCard(Card card, Character target)
@@ -51,9 +51,10 @@ public class BattleManager : MonoBehaviour
         // 2. 执行卡牌效果
         card.Play(player, target);
         // 3. 从手牌移到弃牌堆
-        cardManager.DiscardCard(card);
+        CardManager.Instance.DiscardCard(card);
         // 4. 检查胜负
         CheckBattleEnd();
+        BattleUIManager.Instance.RefreshAllUI();
     }
     void CheckBattleEnd() { }
     //卡组三分区：牌库、手牌、弃牌堆
@@ -65,7 +66,6 @@ public class BattleManager : MonoBehaviour
         if (Instance) Destroy(gameObject);
         else Instance = this;
         DontDestroyOnLoad(gameObject);
-        button.onClick.AddListener(NextTurn);
     }
     public void NextTurn()
     {
@@ -74,6 +74,7 @@ public class BattleManager : MonoBehaviour
         EnemyTurnStart();
         PlayerTurnStart();
         PlayerAction();
+        BattleUIManager.Instance.RefreshAllUI();
     }
     public void PlayerTurnEnd()
     {

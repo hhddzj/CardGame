@@ -25,10 +25,11 @@ public class MapPanel : UIPanel
     }
     public void SpawnWindow()
     {
-        TestWindow win = UIFrame.Instance.OpenDynamicWindow(testWindow) as TestWindow;
-        if (win != null)
-            win.Initialize("动态窗口 " + Random.Range(1, 100));
-        
+        UIFrame.Instance.OpenPanel("BattlePanel");
+        //TestWindow win = UIFrame.Instance.OpenDynamicWindow(testWindow) as TestWindow;
+        //if (win != null)
+        //win.Initialize("动态窗口 " + Random.Range(1, 100));
+
 
     }
     public override void OnEnter()

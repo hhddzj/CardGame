@@ -14,6 +14,8 @@ public class BattlePanel : UIPanel
             titleText.transform.localScale = Vector3.zero;
             titleText.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBounce);
         }
+        BattleUIManager.Instance.StartGame();
+        BattleUIManager.Instance.RefreshAllUI();
     }
     public override void OnExit()
     {

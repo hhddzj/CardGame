@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Assets._Project.Scripts.Managers;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,11 +15,12 @@ public class MainPanel : UIPanel
         if (settingsButton)
             settingsButton.onClick.AddListener(OnSettings);
         if (playgameButton)
-            playgameButton.onClick.AddListener(OnMapPanel);
+            playgameButton.onClick.AddListener(PlayGame);
     }
-    void OnMapPanel()
+    void PlayGame()
     {
         UIFrame.Instance.OpenPanel("MapPanel");
+        CardManager.Instance.InitGame();
     }
     void OnSettings()
     {
