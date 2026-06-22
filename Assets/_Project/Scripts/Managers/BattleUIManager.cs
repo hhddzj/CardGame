@@ -26,29 +26,29 @@ public class BattleUIManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         //btnEndTurn.onClick.AddListener(() => FindObjectOfType<BattleManager>().EndPlayerTurn());
     }
+    private List<GameObject> activeCardObjects = new List<GameObject>();
     //全量刷新UI
     public void RefreshAllUI()
     {
+        Debug.Log("状态=" + BattleManager.Instance.currentState);
         // 1. 更新血量、费用文本
         playerHpText.text = $"{BattleManager.Instance.player.currentHealth}/{BattleManager.Instance.player.maxHealth}";
         //monsterHpText.text = $"{BattleManager.Instance.enemies[0].currentHealth}/{BattleManager.Instance.enemies[0].maxHealth}";
         energyText.text = $"能量：{BattleManager.Instance.player.energy}";
 
-        // 2. 清空手牌区所有旧卡牌
-        for (int i = handContent.childCount - 1; i >= 0; i--)
-        {
-            Destroy(handContent.GetChild(i).gameObject);
-        }
+        // 清空旧卡牌
+        foreach (var obj in activeCardObjects)
+            Destroy(obj);
+        activeCardObjects.Clear();
+        Debug.Log($"销毁后子物体总数: {activeCardObjects.Count}");
 
         // 3. 循环手牌数据，实例化卡牌节点
         List<Card> handList = CardManager.Instance.hand;
         Debug.Log("当前手牌数量：" + handList.Count);
-        for (int i = 0; i < handList.Count; i++)
+        foreach (var data in handList)
         {
-            Card data = handList[i];
-            // 实例化卡牌到手牌父物体下
             GameObject cardObj = Instantiate(cardPrefab, handContent);
-
+            activeCardObjects.Add(cardObj);
             // 填充卡牌文字
             TextMeshProUGUI nameTMP = cardObj.transform.Find("NameText").GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI costTMP = cardObj.transform.Find("CostText").GetComponent<TextMeshProUGUI>();
@@ -62,19 +62,20 @@ public class BattleUIManager : MonoBehaviour
             {
                 dragComp.SetCardData(data);
             }
-            if (handLayoutHelper != null)
-            {
-                handLayoutHelper.RefreshHandLayout();
-            }
+        }
+        if (handLayoutHelper != null)
+        {
+            handLayoutHelper.RefreshHandLayout(activeCardObjects);
         }
     }
 
     public void StartGame()
     {
+        Debug.Log("初始化游戏");
+        Debug.Log("状态=" + BattleManager.Instance.currentState);
         Debug.Log("btnEndTurn是否为空：" + (btnEndTurn == null));
         btnEndTurn.onClick.AddListener(BattleManager.Instance.NextTurn);
         BattleManager.Instance.InitBattle();                    // 创建怪物 + 初始化卡组
-        BattleManager.Instance.ChangeState(BattleState.PlayerTurnStart);
         Instance.RefreshAllUI();
 
     }

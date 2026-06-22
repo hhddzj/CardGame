@@ -41,18 +41,19 @@ namespace Assets._Project.Scripts.Managers
             // 1攻击卡 10张
             for (int i = 0; i < 10; i++)
             {
-                drawcardPile.Add(cardAtk1);
+                discardPile.Add(cardAtk1);
             }
             // 2攻击卡 10张
             for (int i = 0; i < 10; i++)
             {
-                drawcardPile.Add(cardAtk2);
+                discardPile.Add(cardAtk2);
             }
             // 10攻击卡 10张
             for (int i = 0; i < 10; i++)
             {
-                drawcardPile.Add(cardAtk10);
+                discardPile.Add(cardAtk10);
             }
+            ShuffleDiscardIntoDeck();
             Debug.Log("当前卡组数量：" + drawcardPile.Count);
         }
         public void InitBattle()
@@ -62,6 +63,15 @@ namespace Assets._Project.Scripts.Managers
             hand.Clear();
             discardPile.Clear();
             DisCard(5);
+        }
+        public void TurnEnd()
+        {
+            discardPile.AddRange(hand);
+            hand.Clear();
+        }
+        public void TurnStart()
+        {
+            DisCard(handSize);
         }
         public void DisCard(int n)
         {

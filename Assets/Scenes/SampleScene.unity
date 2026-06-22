@@ -690,7 +690,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 600001277602565172, guid: c0f786fddb237da4abd6e0346180bd75, type: 3}
       propertyPath: maxRotateAngle
-      value: 5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 600001277602565172, guid: c0f786fddb237da4abd6e0346180bd75, type: 3}
       propertyPath: verticalPadding
@@ -1006,6 +1006,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5388782004859819375, guid: c0f786fddb237da4abd6e0346180bd75, type: 3}
       propertyPath: m_Vertical
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5388782004859819375, guid: c0f786fddb237da4abd6e0346180bd75, type: 3}
+      propertyPath: m_Horizontal
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5388782004859819375, guid: c0f786fddb237da4abd6e0346180bd75, type: 3}

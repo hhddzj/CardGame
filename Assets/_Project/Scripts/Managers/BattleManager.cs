@@ -18,9 +18,15 @@ public class BattleManager : MonoBehaviour
     [Header("怪物")]
     public GameObject enemyPrefab;            // 敌人预制体
     public Transform enemySpawnPoint;         // 场景中敌人出生点
-    public void ChangeState(BattleState newState) { }
+    public void ChangeState(BattleState newState) {
+        currentState=newState;
+    }
     public void InitBattle()
     {
+        Debug.Log("初始化战斗");
+        Debug.Log("状态=" + currentState);
+        ChangeState(BattleState.PlayerAction);
+        Debug.Log("状态=" + currentState);
         // 1. 根据关卡配置创建敌人（下面细讲）
         GameObject enemyObj = Instantiate(enemyPrefab, enemySpawnPoint);
         Enemy enemy = enemyObj.GetComponent<Enemy>();
@@ -42,6 +48,7 @@ public class BattleManager : MonoBehaviour
     // 这里就是你要的“使用卡牌”的业务逻辑
     public void PlayCard(Card card, Character target)
     {
+        Debug.Log("PlayCard 被调用，状态=" + currentState);
         // 只能在玩家回合中使用
         if (currentState != BattleState.PlayerAction) return;
         if (player.energy < card.cost) return;
@@ -52,6 +59,7 @@ public class BattleManager : MonoBehaviour
         card.Play(player, target);
         // 3. 从手牌移到弃牌堆
         CardManager.Instance.DiscardCard(card);
+        Debug.Log($"{card.cardName} 对 {target.name} 生效");
         // 4. 检查胜负
         CheckBattleEnd();
         BattleUIManager.Instance.RefreshAllUI();
@@ -80,6 +88,7 @@ public class BattleManager : MonoBehaviour
     {
         // 结算回合结束效果
         currentState = BattleState.PlayerTurnEnd;
+        CardManager.Instance.TurnEnd();
         Debug.Log("结算回合结束效果");
     }
     public void EnemyTurnStart()
@@ -93,6 +102,8 @@ public class BattleManager : MonoBehaviour
     {
         // 回能量、抽牌、重置格挡,结算敌方回合结束效果
         Debug.Log("回能量、抽牌、重置格挡,结算敌方回合结束效果");
+        player.ResetEnergy();
+        CardManager.Instance.TurnStart();
         currentState = BattleState.PlayerTurnStart;
 
     }
