@@ -15,5 +15,5 @@ MonoBehaviour:
   cardName: Acard10
   cost: 3
   type: 0
-  description: "10\u653B\u51FB"
-  damage: 10
+  description: "50\u653B\u51FB"
+  damage: 50

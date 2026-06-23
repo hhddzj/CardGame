@@ -64,7 +64,14 @@ public class BattleManager : MonoBehaviour
         CheckBattleEnd();
         BattleUIManager.Instance.RefreshAllUI();
     }
-    void CheckBattleEnd() { }
+    void CheckBattleEnd()
+    {
+        if (enemies.Count==0)
+        {
+            Debug.Log("游戏胜利");
+        }
+        
+    }
     //卡组三分区：牌库、手牌、弃牌堆
     public Button button;
     public static BattleManager Instance {  get; private set; }

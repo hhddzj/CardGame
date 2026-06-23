@@ -22,4 +22,35 @@ public class Enemy : Character
         */
         // 更新UI显示意图图标和数值
     }
+    public override void TakeDamage(int amount)
+    {
+        if (amount <= 0) return;
+
+        // 护盾减伤逻辑（优化版）
+        if (block > 0)
+        {
+            if (amount >= block)
+            {
+                amount -= block;
+                block = 0;
+            }
+            else
+            {
+                block -= amount;
+                amount = 0;
+            }
+        }
+
+        // 扣除血量
+        currentHealth -= amount;
+        if (currentHealth < 0)
+            currentHealth = 0;
+        if(currentHealth==0)
+        {
+            BattleManager.Instance.enemies.Remove(this);
+            Destroy(gameObject);
+        }
+        // 更新UI（关键！）
+        UpdateHealthUI();
+    }
 }
