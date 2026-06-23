@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9163011669788714019}
   - component: {fileID: 6798894524511143915}
+  - component: {fileID: 1285872955114143829}
   - component: {fileID: 3019973764342997549}
   - component: {fileID: 8881135854203804904}
   m_Layer: 0
@@ -47,6 +48,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3481379276597686747}
   m_CullTransparentMesh: 1
+--- !u!114 &1285872955114143829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3481379276597686747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fbd7f8313382a54ba679cba6842976c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  intentIcon: {fileID: 0}
+  intentValue: {fileID: 0}
+  intentPanel: {fileID: 0}
 --- !u!114 &3019973764342997549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,8 +78,11 @@ MonoBehaviour:
   maxHealth: 30
   currentHealth: 0
   block: 0
-  HpImage: {fileID: 7444153379303283553}
-  Hp: {fileID: 4350635198482362663}
+  hpImage: {fileID: 7444153379303283553}
+  hpText: {fileID: 4350635198482362663}
+  blockText: {fileID: 0}
+  popupParent: {fileID: 0}
+  intentSystem: {fileID: 0}
 --- !u!114 &8881135854203804904
 MonoBehaviour:
   m_ObjectHideFlags: 0

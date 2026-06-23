@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,56 +9,141 @@ public class Character : MonoBehaviour
     public int maxHealth;
     public int currentHealth;
     public int block;
+
     [Header("UI绑定")]
-    public Image HpImage;
-    public TextMeshProUGUI Hp;
+    public Image hpImage;
+    public TextMeshProUGUI hpText;
+    public TextMeshProUGUI blockText;
+    public Transform popupParent;
+
+    private DamagePopup damagePopup;
+
+    protected virtual void Awake()
+    {
+        if (popupParent == null)
+        {
+            popupParent = transform;
+        }
+    }
+
     protected virtual void Start()
     {
-        // 初始化血量
-        currentHealth = maxHealth;
+        if (currentHealth == 0 && maxHealth > 0)
+        {
+            currentHealth = maxHealth;
+        }
         UpdateHealthUI();
+        UpdateBlockUI();
     }
+
     public virtual void TakeDamage(int amount)
     {
         if (amount <= 0) return;
 
-        // 护盾减伤逻辑（优化版）
+        int remainingDamage = amount;
+        int blockDamage = 0;
+
         if (block > 0)
         {
             if (amount >= block)
             {
-                amount -= block;
+                blockDamage = block;
+                remainingDamage = amount - block;
                 block = 0;
             }
             else
             {
+                blockDamage = amount;
                 block -= amount;
-                amount = 0;
+                remainingDamage = 0;
             }
         }
 
-        // 扣除血量
-        currentHealth -= amount;
+        if (blockDamage > 0)
+        {
+            ShowDamagePopup(blockDamage, true);
+        }
+
+        currentHealth -= remainingDamage;
         if (currentHealth < 0)
             currentHealth = 0;
 
-        // 更新UI（关键！）
+        if (remainingDamage > 0)
+        {
+            ShowDamagePopup(remainingDamage, false);
+        }
+
         UpdateHealthUI();
+        UpdateBlockUI();
     }
 
-    // 新增：统一更新血条和文本
+    public void AddBlock(int amount)
+    {
+        if (amount <= 0) return;
+        block += amount;
+        ShowDamagePopup(amount, true);
+        UpdateBlockUI();
+    }
+
+    public void ClearBlock()
+    {
+        block = 0;
+        UpdateBlockUI();
+    }
+
     protected void UpdateHealthUI()
     {
-        if (Hp != null)
+        if (hpText != null)
         {
-            Hp.text = $"{currentHealth}/{maxHealth}";
+            hpText.text = $"{currentHealth}/{maxHealth}";
         }
 
-        if (HpImage != null)
+        if (hpImage != null && maxHealth > 0)
         {
-            // 计算血量比例，控制血条进度
             float fillRatio = (float)currentHealth / maxHealth;
-            HpImage.fillAmount = fillRatio;
+            fillRatio = Mathf.Clamp(fillRatio, 0f, 1f);
+
+            if (!float.IsNaN(fillRatio) && !float.IsInfinity(fillRatio))
+            {
+                hpImage.DOFillAmount(fillRatio, 0.3f);
+
+                if (fillRatio <= 0.3f)
+                    hpImage.DOColor(new Color(1f, 0.3f, 0.3f), 0.3f);
+                else if (fillRatio <= 0.6f)
+                    hpImage.DOColor(new Color(1f, 0.8f, 0.3f), 0.3f);
+                else
+                    hpImage.DOColor(new Color(0.3f, 1f, 0.3f), 0.3f);
+            }
         }
+    }
+
+    protected void UpdateBlockUI()
+    {
+        if (blockText != null)
+        {
+            bool hasBlock = block > 0;
+            blockText.text = hasBlock ? $"🛡️ {block}" : "";
+            blockText.gameObject.SetActive(hasBlock);
+        }
+    }
+
+    protected void ShowDamagePopup(int amount, bool isBlock)
+    {
+        if (damagePopup == null)
+        {
+            Transform parent = popupParent != null ? popupParent : transform;
+            damagePopup = DamagePopup.Create(parent);
+        }
+        damagePopup.ShowDamage(transform.position, amount, isBlock);
+    }
+
+    public bool IsAlive()
+    {
+        return currentHealth > 0;
+    }
+
+    public float GetHealthPercent()
+    {
+        return (float)currentHealth / maxHealth;
     }
 }

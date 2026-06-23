@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Assets._Project.Scripts.Managers
+﻿namespace Assets._Project.Scripts.Managers
 {
     public enum BattleState
     {
@@ -14,6 +8,7 @@ namespace Assets._Project.Scripts.Managers
         EnemyTurnStart,    // 敌人执行意图
         EnemyAction,       // 播放动作
         EnemyTurnEnd,      // 结算敌方回合结束效果
-        BattleEnd          // 胜利/失败
+        Victory,           // 胜利
+        Defeat             // 失败
     }
 }
