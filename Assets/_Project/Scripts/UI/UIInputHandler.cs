@@ -1,39 +1,69 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// UI输入处理器，负责处理键盘快捷键与UI面板/窗口的映射
+/// </summary>
 public class UIInputHandler : MonoBehaviour
 {
+    /// <summary>
+    /// UI动作绑定类，定义输入动作与UI页面的映射关系
+    /// </summary>
     [System.Serializable]
     public class UIActionBinding
     {
-        public string actionName;   // 与 PlayerInputActions 中的 Action 名一致
-        public string pageName;     // 要打开的面板名称（或自定义命令）
+        /// <summary>
+        /// 与 PlayerInputActions 中的 Action 名一致
+        /// </summary>
+        public string actionName;
+
+        /// <summary>
+        /// 要打开的面板名称（或自定义命令）
+        /// </summary>
+        public string pageName;
     }
 
-    [SerializeField] private UIActionBinding[] bindings; // 在 Inspector 中配置映射
+    /// <summary>
+    /// 在 Inspector 中配置的输入动作与UI页面的映射数组
+    /// </summary>
+    [SerializeField] private UIActionBinding[] bindings;
 
+    /// <summary>
+    /// 输入动作配置实例
+    /// </summary>
     private PlayerInputActions inputActions;
 
+    /// <summary>
+    /// 初始化输入动作配置
+    /// </summary>
     private void Awake() => inputActions = new PlayerInputActions();
 
+    /// <summary>
+    /// 启用时订阅所有配置的输入动作
+    /// </summary>
     private void OnEnable()
     {
         inputActions.Enable();
 
-        // 动态订阅所有配置的 Action
         foreach (var binding in bindings)
             SubscribeAction(binding.actionName);
     }
 
+    /// <summary>
+    /// 禁用时取消订阅所有输入动作
+    /// </summary>
     private void OnDisable()
     {
-        // 动态取消订阅
         foreach (var binding in bindings)
             UnsubscribeAction(binding.actionName);
 
         inputActions.Disable();
     }
 
+    /// <summary>
+    /// 订阅指定名称的输入动作
+    /// </summary>
+    /// <param name="actionName">动作名称</param>
     private void SubscribeAction(string actionName)
     {
         var action = inputActions.FindAction(actionName);
@@ -43,6 +73,10 @@ public class UIInputHandler : MonoBehaviour
             Debug.LogWarning($"Action '{actionName}' not found in PlayerInputActions");
     }
 
+    /// <summary>
+    /// 取消订阅指定名称的输入动作
+    /// </summary>
+    /// <param name="actionName">动作名称</param>
     private void UnsubscribeAction(string actionName)
     {
         var action = inputActions.FindAction(actionName);
@@ -50,9 +84,12 @@ public class UIInputHandler : MonoBehaviour
             action.performed -= OnActionPerformed;
     }
 
+    /// <summary>
+    /// 输入动作执行时的回调处理
+    /// </summary>
+    /// <param name="ctx">输入动作回调上下文</param>
     private void OnActionPerformed(InputAction.CallbackContext ctx)
     {
-        // 根据触发的 action 名字，找到对应的 binding
         foreach (var binding in bindings)
         {
             if (binding.actionName == ctx.action.name)
@@ -63,12 +100,15 @@ public class UIInputHandler : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 执行绑定的UI操作
+    /// </summary>
+    /// <param name="binding">动作绑定</param>
     private void ExecuteBinding(UIActionBinding binding)
     {
-        // 特殊处理：如果是 Cancel（ESC），保持原来的切换逻辑
         if (binding.actionName == "Cancel")
         {
-            if (UIFrame.Instance.CurrentWindow!=null&& UIFrame.Instance.CurrentWindow.pageName == binding.pageName)
+            if (UIFrame.Instance.CurrentWindow != null && UIFrame.Instance.CurrentWindow.pageName == binding.pageName)
                 UIFrame.Instance.CloseWindow();
             else
                 UIFrame.Instance.OpenWindow(binding.pageName);
@@ -80,8 +120,6 @@ public class UIInputHandler : MonoBehaviour
             {
                 UIFrame.Instance.ClosePanel();
             }
-                // 其他快捷键：直接切换面板（如果已经是当前面板则关闭？根据需要调整）
-                
             else
             {
                 UIFrame.Instance.OpenPanel(binding.pageName);
